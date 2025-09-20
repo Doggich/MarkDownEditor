@@ -1,9 +1,19 @@
 import os
+import sys
 import re
 import customtkinter as ctk
 from tkinter import messagebox, filedialog, Menu
+from darkdetect import theme
 from tkhtmlview import HTMLLabel
 import markdown
+
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 
 class MarkdownEditorApp(ctk.CTk):
@@ -11,14 +21,14 @@ class MarkdownEditorApp(ctk.CTk):
         super().__init__()
 
         self.BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-        self.ICON_PATH = os.path.join(self.BASE_DIR, "resources", "icon.ico")
+        self.ICON_PATH = resource_path(os.path.join("resources", "icon.ico"))
         self.title("Doctus")
         self.geometry("1200x800")
         self.minsize(1200, 800)
-        self.iconbitmap(os.path.join(self.BASE_DIR, r".\resources\icon.ico"))
+        self.iconbitmap(self.ICON_PATH)
 
         ctk.set_appearance_mode("System")
-        ctk.set_default_color_theme("dark-blue")
+        ctk.set_default_color_theme(resource_path(os.path.join("theme", "app_theme.json")))
 
         self.create_menu()
 
@@ -127,7 +137,7 @@ class MarkdownEditorApp(ctk.CTk):
             "\n\n"
             "> Quote\n\n"
             "```python\nprint(*[i for i in range(0, 10, 2) if i % 2 == 0])\n```\n\n"
-            "![Kawai ^_^](https://goo.su/R2xxhu)\n"
+            "![UWU](https://goo.su/BJW1X)\n"
             "\n\n"
             "# *@#BBDCE5@UWU@end@*\n\n"
             "*@#F0A8D0@Quick Markdown Example in Doctus!@end@*"
